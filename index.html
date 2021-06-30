@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+<div>
+    <a href="backOffice.html">backOffice</a>
+</div>
+
+
+
+
+
+
+
+
+    <div class="container">
+         <h2 class="mt-5 mb-3">Amazon products</h2>
+         <div class="card" style="width: 18rem;">
+            <img src="${event.img}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">T-shirt</h5>
+              <p class="card-text">Philipp Plein Men's T-Shirt Round Neck SS Skull and Plein</p>
+              <a href="#" class="btn btn-primary"></a>
+            </div>
+          </div>
+       
+    </div>
+
+    <script>
+
+        const getData = async (url) => {
+            try {
+                const response = await fetch(url,{
+                    headers:{ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
+                })
+                console.log(response)
+                if (!response.ok) throw new Error("Failed to fetch")
+                const events = await response.json()
+                return events
+
+            } catch (err) {
+                console.log(err)
+            } finally {
+                console.log("I'm the last thing")
+            }
+        }
+
+        const displayProduct = (events) => {
+            const divContainer = document.querySelector(".container")
+            const cards = document.querySelector('.card')
+            
+
+            if (events.length > 0) {
+                events.forEach(event => {
+                    cards = ''
+        
+                    divContainer.innerHTML = 
+                    `  
+        <div class="card">
+        <img src="${event.img}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">T-shirt</h5>
+          <p class="card-text">Philipp Plein Men's T-Shirt Round Neck SS Skull and Plein</p>
+          <a href="#" class="btn btn-primary"></a>
+        </div>
+      </div>
+                    `
+
+                
+                })
+            }
+
+        }
+
+        window.onload = async () => {
+            const url = "https://striveschool-api.herokuapp.com/api/product/"
+
+            const events = await getData(url)
+            displayProduct(events)
+
+
+        }
+
+        
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
