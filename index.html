@@ -26,7 +26,8 @@
 
 
     <div class="container">
-         <h2 class="mt-5 mb-3">Amazon products</h2>
+
+         <!-- <h2 class="mt-5 mb-3">Amazon products</h2>
          <div class="card" style="width: 18rem;">
             <img src="https://images-na.ssl-images-amazon.com/images/I/813NDtD7kyL._AC_UX679_.jpg" class="card-img-top" alt="...">
             <div class="card-body">
@@ -34,7 +35,10 @@
               <p class="card-text">Philipp Plein Men's T-Shirt Round Neck SS Skull and Plein</p>
               <a href="#" class="btn btn-primary"></a>
             </div>
-          </div>
+          </div> -->
+    <div class="row">
+
+    </div>
     </div>
 
     <script>
@@ -59,7 +63,7 @@
         }
 
         const displayProduct = (events) => {
-            const divContainer = document.querySelector(".container")
+            const divContainer = document.querySelector(".row")
           
             
 
@@ -69,7 +73,8 @@
         
                     divContainer.innerHTML += 
                     `  
-        <div class="card" style="width: 18rem;>
+        <div class="col">
+        <div class="card" style="width: 18rem;">
         <img src="${event.imageUrl}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">${event.name}</h5>
@@ -78,6 +83,7 @@
           <p class="card-text">${event.description}</p>
           <a href="#" class="btn btn-primary"></a>
         </div>
+      </div>
       </div>
                     `
 
