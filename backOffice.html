@@ -12,6 +12,12 @@
 
     <title>backoffice!</title>
 </head>
+<style>
+    form{
+        background-color: ;
+        box-shadow: 5px 5px 20px;
+    }
+</style>
 
 <body>
 
@@ -45,13 +51,76 @@
                         <input id="brand" type="text" class="form-control"
                             required>
                     </div>
+                    <div class="form-group">
+                        <label for="id">id</label>
+                        <input id="_id" type="number" class="form-control"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2 class="mt-5 mb-3"> remove from Amazon list </h2>
+                <form onsubmit="deleteProduct(event)">
+                    <div class="form-group">
+                        <label for="id">id</label>
+                        <input id="userId" type="number" class="form-control" aria-describedby="name field" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <script>
+     <script>
+
+         
+
+    
+        const deleteProduct = async (event) =>{
+            event.preventDefault()
+
+
+const url = 'https://striveschool-api.herokuapp.com/api/product'
+     const userID = {id: document.getElementById("userId").value}
+
+try {
+    const response = await fetch(url, {
+        method: "DELETE",
+        
+     
+        headers: {
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ",
+            
+        }
+    })
+
+    
+    if (response.ok) {
+        const respEvent = await response.json()
+        alert("Amazon cart deleted successfully with an id of " + respEvent.id)
+    } else {
+        
+        if (response.status >= 400 && response.status < 500) {
+            throw new Error("User generated error, verify the data that you are sending")
+        } else if (response.status >= 500 && response.status < 600) {
+            throw new Error("error 500")
+        }
+    }
+    
+    console.log("You see me? then no exeption was thrown")
+} catch (err) {
+   
+    console.log(err)
+    alert(err.message)
+} finally {
+    
+    
+    console.log("finally")
+}
+
+}
+
 
         const handleSubmit = async (event) => {
            event.preventDefault()
@@ -65,6 +134,7 @@
                 price: document.getElementById("price").value,
                 brand: document.getElementById("brand").value,
                 imageUrl: document.getElementById("imageUrl").value,
+                Id: document.getElementById("_id").value,
             }
 
             
