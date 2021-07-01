@@ -21,7 +21,6 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
 </style>
 
 <body>
-
  
 <nav class="navbar navbar-dark bg-dark mb-5">
     <a class="navbar-brand" href="backOffice.html">backoffice</a>
@@ -31,7 +30,6 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
 <div class="container">
     <div class="row">
         <div class="col-12" id="event-details">
-            
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
@@ -55,6 +53,7 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
 <script>
     const url = "https://striveschool-api.herokuapp.com/api/product/"
     const eventId = new URLSearchParams(window.location.search).get('id')
+   
 
     window.onload = async() => {
 try {
@@ -89,6 +88,20 @@ console.log('last console')
     const handleEdit = () =>{
         window.location.assign('backOffice.html?id=' + eventId)
     }
+
+
+
+//     const isLoading = (yes) =>{
+
+//     if(yes){
+//         document.querySelector('#spinner').classList.remove('d-none')
+//         setTimeout(()=>{
+//             document.querySelector('#spinner').classList.add('d-none')
+//     },3000)
+//     }else{
+//         document.querySelector('$spinner').classList.add('d-none')
+//     }
+// }
 
 </script>
 

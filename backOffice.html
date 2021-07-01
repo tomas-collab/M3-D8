@@ -35,7 +35,6 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
                 <h2 class="mt-5 mb-3"> Add to Amazon  </h2>
                 <h5 id="subtitle" class="d-inline-block"></h5>
                 <hr/>
-                <div><span id="alert-box"></span></div>
                 <form onsubmit="handleSubmit(event)">
                     <div id="spinner" class="spinner-border spinner-border-sm text-light d-none" role="status">
                         <span class="sr-only">Loading...</span>
@@ -75,6 +74,8 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
                         </button>
                         <button type="button" class="btn btn-info"><a href="index.html">Home</a>-</button>
                     </div>
+
+                    <div><span id="alert-box"></span></div>
                 </form>
             </div>
         </div>
@@ -229,7 +230,7 @@ const isLoading = (yes) =>{
         document.querySelector('#spinner').classList.remove('d-none')
         setTimeout(()=>{
             document.querySelector('#spinner').classList.add('d-none')
-    },2000)
+    },3000)
     }else{
         document.querySelector('$spinner').classList.add('d-none')
     }
