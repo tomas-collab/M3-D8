@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <title>Details</title>
+</head>
+<style>
+   body{
+       
+        background-color: rgb(65,64,82);
+background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%, rgba(0,212,255,1) 100%); ;
+    }
+</style>
+
+<body>
+
+ 
+<nav class="navbar navbar-dark bg-dark mb-5">
+    <a class="navbar-brand" href="backOffice.html">backoffice</a>
+  </nav>
+ 
+  
+<div class="container">
+    <div class="row">
+        <div class="col-12" id="event-details">
+            
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-success mt-3" onclick="handleEdit()">edit event</button>
+         </div>
+ 
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+    const url = "https://striveschool-api.herokuapp.com/api/product/"
+    const eventId = new URLSearchParams(window.location.search).get('id')
+
+    window.onload = async() => {
+try {
+        const response = await fetch(url + eventId ,{
+                    headers:{ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
+                })
+       if(response.ok){
+        const eventData = await response.json()
+        const eventContainer = document.getElementById('event-details')
+         eventContainer.innerHTML = 
+         `
+         <div class="card" style="width: 18rem;">
+        <div class="card-body">
+         
+          <h5 class="card-title">ID-> ${eventData._id}</h5>
+          <h5 class="card-title">CreatedAt${eventData.createdAt}</h5>
+          <h5 class="card-title">UpdatedAt-> ${eventData.updatedAt}</h5>
+         
+         
+        </div>
+      </div>
+         `
+    }
+}catch (err) {
+    console.log(err)
+}
+console.log('last console')
+}
+    
+    
+
+    const handleEdit = () =>{
+        window.location.assign('backOffice.html?id=' + eventId)
+    }
+
+</script>
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

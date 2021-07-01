@@ -13,8 +13,15 @@
     <title>backoffice!</title>
 </head>
 <style>
+    body{
+        color: white;
+        background-color: rgb(65,64,82);
+background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%, rgba(0,212,255,1) 100%); ;
+    }
+</style>
+<style>
     form{
-        background-color: ;
+       column-rule-style: none;
         box-shadow: 5px 5px 20px;
     }
 </style>
@@ -26,106 +33,104 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2 class="mt-5 mb-3"> Add to Amazon  </h2>
+                <h5 id="subtitle" class="d-inline-block"></h5>
+                <hr/>
+                <div><span id="alert-box"></span></div>
                 <form onsubmit="handleSubmit(event)">
+                    <div id="spinner" class="spinner-border spinner-border-sm text-light d-none" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                     <div class="form-group">
                         <label for="name">Product-Name</label>
-                        <input id="name" type="text" class="form-control" aria-describedby="name field" required>
+                        <input id="name" type="text" class="form-control" style="border-top: none;" aria-describedby="name field" required>
                     </div>
                     <div class="form-group">
-                        <label for="description">Product-Description</label>
-                        <input id="description" type="textarea" rows="6" class="form-control"
-                            aria-describedby="event description field" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Product-Ticket Price</label>
-                        <input id="price" type="number" class="form-control" aria-describedby="ticket price field"
-                            required>
+                        <label for="price">Product-Price</label>
+                        <input id="price" type="number" class="form-control" style="border-top: none;" aria-describedby="ticket price field"
+                        required>
                     </div>
                     <div class="form-group">
                         <label for="imageUrl">image</label>
-                        <input id="imageUrl" type="text" class="form-control"
-                             >
+                        <input id="imageUrl" type="text" class="form-control" style="border-top: none;"
+                        >
                     </div>
                     <div class="form-group">
                         <label for="brand"> Product-brand</label>
-                        <input id="brand" type="text" class="form-control"
-                            required>
+                        <input id="brand" type="text" class="form-control" style="border-top: none;"
+                        required>
                     </div>
                     <div class="form-group">
-                        <label for="id">id</label>
-                        <input id="_id" type="number" class="form-control"
-                            required>
+                        <label for="description">Product-Description</label>
+                        <textarea id="description" type="text" rows="6" class="form-control"
+                        aria-describedby="event description field" placeholder="Write the event's description"
+                        required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <h2 class="mt-5 mb-3"> remove from Amazon list </h2>
-                <form onsubmit="deleteProduct(event)">
-                    <div class="form-group">
-                        <label for="id">id</label>
-                        <input id="userId" type="number" class="form-control" aria-describedby="name field" required>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary"
+                            onclick="this.form.classList.add('validated')"><span>Create</span>
+                        </button>
+                        <button id="delete-btn" type="button" class="btn btn-danger" onclick="cardDelete()">
+                            Delete
+                        </button>
+                        <button type="button" class="btn btn-info"><a href="index.html">Home</a>-</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 
      <script>
+         const cardId = new URLSearchParams(window.location.search).get('id')
+         const endpoint = cardId ? 'https://striveschool-api.herokuapp.com/api/product/' + cardId : 'https://striveschool-api.herokuapp.com/api/product/'
+         const method = cardId ? "PUT" : "POST"
 
-         
+         window.onload = async() => {
+             console.log("Resource ID:" + cardId)
+             if(cardId){
+                 document.getElementById('subtitle').innerText = 'Edit card'
+                 const submitBtn = document.querySelector('button[type=submit]')
+                 const submitBtnText = document.querySelector('button[type=submit] span')
+
+                 submitBtn.querySelector('span').innerText = 'Edit Card'
+                 submitBtn.classList.remove('btn-primary')
+                 submitBtn.classList.add('btn-success')
+
+
+                 const response = await fetch(endpoint,{
+                     headers:{"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ",}
+                 })
+                 const eventDetails = await response.json()
+
+                 console.log('eventDetails'.eventDetails)
+
+
+                 document.getElementById("name").value = eventDetails.name
+                 document.getElementById("description").value = eventDetails.description
+                 document.getElementById("price").value = eventDetails.price
+                 document.getElementById("brand").value = eventDetails.brand
+                
+             }else{
+                document.getElementById('subtitle').innerText = 'Create an Event'
+             }
+         }
+
+
+
+
 
     
-        const deleteProduct = async (event) =>{
-            event.preventDefault()
 
 
-const url = 'https://striveschool-api.herokuapp.com/api/product'
-     const userID = {id: document.getElementById("userId").value}
 
-try {
-    const response = await fetch(url, {
-        method: "DELETE",
-        
-     
-        headers: {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ",
-            
-        }
-    })
-
-    
-    if (response.ok) {
-        const respEvent = await response.json()
-        alert("Amazon cart deleted successfully with an id of " + respEvent.id)
-    } else {
-        
-        if (response.status >= 400 && response.status < 500) {
-            throw new Error("User generated error, verify the data that you are sending")
-        } else if (response.status >= 500 && response.status < 600) {
-            throw new Error("error 500")
-        }
-    }
-    
-    console.log("You see me? then no exeption was thrown")
-} catch (err) {
-   
-    console.log(err)
-    alert(err.message)
-} finally {
-    
-    
-    console.log("finally")
-}
-
-}
 
 
         const handleSubmit = async (event) => {
            event.preventDefault()
 
-            const url = "https://striveschool-api.herokuapp.com/api/product"
+             isLoading(true)
+
+            // const url = "https://striveschool-api.herokuapp.com/api/product"
 
             const myEvent = {
                
@@ -134,13 +139,13 @@ try {
                 price: document.getElementById("price").value,
                 brand: document.getElementById("brand").value,
                 imageUrl: document.getElementById("imageUrl").value,
-                Id: document.getElementById("_id").value,
+                
             }
 
             
             try {
-                const response = await fetch(url, {
-                    method: "POST",
+                const response = await fetch(endpoint, {
+                    method,
                     
                     body: JSON.stringify(myEvent),
                     headers: {
@@ -152,7 +157,11 @@ try {
                 
                 if (response.ok) {
                     const respEvent = await response.json()
-                    alert("Amazon cart created successfully with an id of " + respEvent._id)
+                    if (cardId){
+                        showAlert('success',  "Amazon cart with an id of " + respEvent._id + 'edited sucessfully')
+                    } else{
+                        showAlert('success',  "Amazon cart created successfully with an id of " + respEvent._id + 'edited sucessfully')
+                    }
                 } else {
                     
                     if (response.status >= 400 && response.status < 500) {
@@ -173,6 +182,59 @@ try {
                 console.log("finally")
             }
         }
+   
+
+        /////DELETE
+
+        const cardDelete = async () => {
+            const confirmed = confirm('are you sure?')
+            if (confirmed){
+                try{
+                    const response = await fetch(endpoint, {
+                        method: 'DELETE',
+                        headers: {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
+                    })
+                    if(response.ok){
+                        showAlert('sucess','Event deleted successfully')
+                        setTimeout(() => {window.location.assign('/')},2000)
+                    }else{
+                        showAlert('danger','something went wrong in the deltion process')
+                    }
+                }catch (err){
+                    showAlert('danger',err.message)
+                }
+            }
+        }
+
+
+
+        ///Handle Error and success
+    
+const showAlert = (type,msg) => {
+     const alertContainer = document.getElementById('alert-box')
+    alertContainer.innerHTML = 
+    `<div class='alert alert-${type}' role='alert'
+    ${msg} </div>`
+
+    setTimeout(()=>{
+        alertContainer.innerHTML = ''
+    },3000)
+}
+
+
+// Loadingggggggggggggg
+
+const isLoading = (yes) =>{
+    if(yes){
+        document.querySelector('#spinner').classList.remove('d-none')
+        setTimeout(()=>{
+            document.querySelector('#spinner').classList.add('d-none')
+    },2000)
+    }else{
+        document.querySelector('$spinner').classList.add('d-none')
+    }
+}
+
 
     </script>
 

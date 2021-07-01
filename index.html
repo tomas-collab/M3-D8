@@ -10,19 +10,31 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Home</title>
 </head>
 <style>
+    #icon{
+        height: 114px;
+        width: 299px;
+    }
+    img{
+        height: 52vh;
+    }
     body{
-        background-color: rgb(98, 98, 102);
+        background-color: rgb(65,64,82);
+background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%, rgba(0,212,255,1) 100%); ;
     }
 </style>
 
 <body>
 
  
+
+ 
 <nav class="navbar navbar-dark bg-dark mb-5">
+    <img id="icon" src="https://media.aubi-plus.com/files/institution/84ce726-amazon-logistik-gmbh-logo.jpg" width="30" height="30" class=" img-fluid" alt="">
     <a class="navbar-brand" href="backOffice.html">Add more</a>
+    </a>
   </nav>
  
   
@@ -82,15 +94,15 @@
         
                     divContainer.innerHTML += 
                     `  
-        <div class="col-12 col-md-4 col-lg-3 m-2">
+        <div class="col-12 col-md-3 col-lg-3 m-2">
         <div class="card" style="width: 18rem;">
         <img src="${event.imageUrl}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">${event.name}</h5>
-          <h5 class="card-title">${event.Id}</h5>
-          <h5 class="card-title">${event.price}</h5>
-          <h5 class="card-title">${event.brand}</h5>
+          <h5 class="card-title">price:${event.price}$</h5>
+          <h5 class="card-title">Brand:${event.brand}</h5>
           <p class="card-text">${event.description}</p>
+          <a href="detail.html?id=${event._id}">view detail</a>
         </div>
       </div>
       </div>
@@ -104,13 +116,15 @@
 
         window.onload = async () => {
             const url = "https://striveschool-api.herokuapp.com/api/product/"
-
-            const events = await getData(url)
+       try{
+        const events = await getData(url)
             displayProduct(events)
-
-
+       } 
+        catch (err) {
+            console.error(err.message)
         }
-
+        console.log('last thing')
+    }
         
     </script>
 
