@@ -26,66 +26,22 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
     }
 </style>
 
-<body>
-
- 
-
- 
+<body> 
 <nav class="navbar navbar-dark bg-dark mb-5">
     <img id="icon" src="https://media.aubi-plus.com/files/institution/84ce726-amazon-logistik-gmbh-logo.jpg" width="30" height="30" class=" img-fluid" alt="">
     <a class="navbar-brand" href="backOffice.html">Add more</a>
     </a>
   </nav>
- 
-  
-
-
-
-
-
-
-
-
     <div class="container">
     <div class="row">
-
     </div>
     </div>
 
     <script>
-
-        const getData = async (url) => {
-            try {
-                const response = await fetch(url,{
-                    headers:{ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
-                })
-                console.log('check',response)
-                if (!response.ok) throw new Error("Failed to fetch")
-                const events = await response.json()
-                console.log(events)
-                return events
-                
-
-            } catch (err) {
-                console.log(err)
-            } finally {
-                console.log("I'm the last thing")
-            }
-        }
-             
-
-
-
-
-        const displayProduct = (events) => {
+        const displayProduct = async(events) => {
             const divContainer = document.querySelector(".row")
-          
-            
-
             if (events.length > 0) {
                 events.forEach(event => {
-                    
-        
                     divContainer.innerHTML += 
                     `  
         <div class="col-12 col-md-3 col-lg-3 m-2">
@@ -101,35 +57,29 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
       </div>
       </div>
                     `
-
-                
                 })
             }
 
         }
 
         window.onload = async () => {
-            const url = "https://striveschool-api.herokuapp.com/api/product/"
-       try{
-        const events = await getData(url)
-            displayProduct(events)
-       } 
-        catch (err) {
-            console.error(err.message)
-        }
-        console.log('last thing')
-    }
+            
+            const response = await fetch('https://striveschool-api.herokuapp.com/api/product/',{
+                headers:{ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
+            })
+            const alldata = await response.json()
+            console.log('data',alldata)
+            displayProduct(alldata)
+         }
         
     </script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
-
-
+        crossorigin="anonymous">
+    </script>
 </body>
 
 </html>

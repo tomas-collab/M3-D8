@@ -25,8 +25,6 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
 <nav class="navbar navbar-dark bg-dark mb-5">
     <a class="navbar-brand" href="backOffice.html">backoffice</a>
   </nav>
- 
-  
 <div class="container">
     <div class="row">
         <div class="col-12" id="event-details">
@@ -41,67 +39,40 @@ background: linear-gradient(90deg, rgba(65,64,82,1) 0%, rgba(115,115,115,1) 70%,
  
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 <script>
     const url = "https://striveschool-api.herokuapp.com/api/product/"
     const eventId = new URLSearchParams(window.location.search).get('id')
-   
-
     window.onload = async() => {
-try {
         const response = await fetch(url + eventId ,{
                     headers:{ "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNjliYWIzNTgxNzAwMTVjMjI3M2UiLCJpYXQiOjE2MjUwNTc3MjIsImV4cCI6MTYyNjI2NzMyMn0.vvoWn6h9mQZeWRqombS-t4PLljsYKr07IX8SpckI6QQ"}
                 })
-       if(response.ok){
         const eventData = await response.json()
         const eventContainer = document.getElementById('event-details')
          eventContainer.innerHTML = 
          `
          <div class="card" style="width: 18rem;">
         <div class="card-body">
-         
           <h5 class="card-title">ID-> ${eventData._id}</h5>
           <h5 class="card-title">CreatedAt${eventData.createdAt}</h5>
           <h5 class="card-title">UpdatedAt-> ${eventData.updatedAt}</h5>
-         
-         
         </div>
       </div>
          `
     }
-}catch (err) {
-    console.log(err)
-}
-console.log('last console')
-}
-    
-    
-
     const handleEdit = () =>{
         window.location.assign('backOffice.html?id=' + eventId)
     }
+    const isLoading = (yes) =>{
 
-
-
-//     const isLoading = (yes) =>{
-
-//     if(yes){
-//         document.querySelector('#spinner').classList.remove('d-none')
-//         setTimeout(()=>{
-//             document.querySelector('#spinner').classList.add('d-none')
-//     },3000)
-//     }else{
-//         document.querySelector('$spinner').classList.add('d-none')
-//     }
-// }
+    if(yes){
+        document.querySelector('#spinner').classList.remove('d-none')
+        setTimeout(()=>{
+            document.querySelector('#spinner').classList.add('d-none')
+    },3000)
+    }else{
+        document.querySelector('$spinner').classList.add('d-none')
+    }
+}
 
 </script>
 
